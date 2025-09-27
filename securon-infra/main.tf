@@ -6,7 +6,6 @@ module "vpc" {
 module "security_groups" {
   source     = "./modules/security_groups"
   vpc_id     = module.vpc.vpc_id
-  alb_sg_id  = module.alb.alb_sg_id
 }
 
 module "alb" {
@@ -14,16 +13,19 @@ module "alb" {
   vpc_id       = module.vpc.vpc_id
   public_subnets = module.vpc.public_subnets
   alb_sg_id    = module.security_groups.alb_sg_id
-  target_sg_id = module.security_groups.ec2_sg_id
+  
 }
 
 module "ec2" {
-  source         = "./modules/ec2"
-  vpc_id         = module.vpc.vpc_id
-  public_subnets = module.vpc.public_subnets
-  ec2_sg_id      = module.security_groups.ec2_sg_id
-  key_name       = var.ec2_key_name
+  source           = "./modules/ec2"
+  
+  private_subnets  = module.vpc.private_subnets   # ✅ Added
+  ec2_sg_id        = module.security_groups.ec2_sg_id
+  key_name         = var.ec2_key_name
+  ami_id           = var.ec2_ami_id              # ✅ Added
+  target_group_arn = module.alb.target_group_arn # ✅ Added
 }
+
 
 module "rds" {
   source          = "./modules/rds"

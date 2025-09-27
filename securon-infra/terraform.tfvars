@@ -1,0 +1,5 @@
+ec2_key_name    = "my-keypair"
+ec2_ami_id      = "ami-0c02fb55956c7d316"
+db_username     = "admin"
+db_password     = "SuperSecurePass123"
+s3_bucket_name  = "securon-static-bucket"
