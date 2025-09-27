@@ -1,5 +1,5 @@
 # ALB Security Group
-resource "aws_security_group" "alb" {
+resource "aws_security_group" "alb_sg" {
   name        = "${var.project}-alb-sg"
   description = "Allow inbound HTTP/HTTPS to ALB"
   vpc_id      = var.vpc_id
@@ -33,7 +33,7 @@ resource "aws_security_group" "alb" {
 }
 
 # EC2 Security Group (App Layer)
-resource "aws_security_group" "ec2" {
+resource "aws_security_group" "ec2_sg" {
   name        = "${var.project}-ec2-sg"
   description = "Allow traffic from ALB to EC2"
   vpc_id      = var.vpc_id
@@ -43,7 +43,7 @@ resource "aws_security_group" "ec2" {
     from_port       = 80
     to_port         = 80
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id]
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -59,7 +59,7 @@ resource "aws_security_group" "ec2" {
 }
 
 # RDS Security Group
-resource "aws_security_group" "rds" {
+resource "aws_security_group" "rds_sg"{
   name        = "${var.project}-rds-sg"
   description = "Allow traffic from EC2 SG to RDS"
   vpc_id      = var.vpc_id
@@ -69,7 +69,7 @@ resource "aws_security_group" "rds" {
     from_port       = var.db_port
     to_port         = var.db_port
     protocol        = "tcp"
-    security_groups = [aws_security_group.ec2.id]
+    security_groups = [aws_security_group.ec2_sg.id]
   }
 
   egress {
