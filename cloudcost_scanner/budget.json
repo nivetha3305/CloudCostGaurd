@@ -1,0 +1,10 @@
+{
+  "aws_instance": 30,
+  "aws_db_instance": 25,
+  "aws_s3_bucket": 10,
+  "aws_nat_gateway": 20,
+  "aws_eip": 5,
+  "aws_lb": 15,
+  "aws_internet_gateway": 2,
+  "overall_budget": 120
+}

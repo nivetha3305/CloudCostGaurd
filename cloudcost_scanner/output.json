@@ -1,0 +1,246 @@
+{
+    "resources": [
+        {
+            "name": "this",
+            "type": "aws_lb",
+            "estimated_cost": 16.2,
+            "actual_cost": 15.39,
+            "budget": 15,
+            "status": "\ud83d\udea8 Exceeded"
+        },
+        {
+            "name": "http",
+            "type": "aws_lb_listener",
+            "estimated_cost": 16.2,
+            "actual_cost": 15.39,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_lb_target_group",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_autoscaling_group",
+            "estimated_cost": 14.98,
+            "actual_cost": 14.23,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "scale_down",
+            "type": "aws_autoscaling_policy",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "scale_up",
+            "type": "aws_autoscaling_policy",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_launch_template",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_db_instance",
+            "estimated_cost": 12.24,
+            "actual_cost": 11.63,
+            "budget": 25,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_db_subnet_group",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_s3_bucket",
+            "estimated_cost": 2.3,
+            "actual_cost": 2.18,
+            "budget": 10,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_s3_bucket_public_access_block",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_s3_bucket_server_side_encryption_configuration",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "this",
+            "type": "aws_s3_bucket_versioning",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "alb_sg",
+            "type": "aws_security_group",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "ec2_sg",
+            "type": "aws_security_group",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "rds_sg",
+            "type": "aws_security_group",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "nat",
+            "type": "aws_eip",
+            "estimated_cost": 3.6,
+            "actual_cost": 3.42,
+            "budget": 5,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "igw",
+            "type": "aws_internet_gateway",
+            "estimated_cost": 0.9,
+            "actual_cost": 0.85,
+            "budget": 2,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "nat",
+            "type": "aws_nat_gateway",
+            "estimated_cost": 32.4,
+            "actual_cost": 30.78,
+            "budget": 20,
+            "status": "\ud83d\udea8 Exceeded"
+        },
+        {
+            "name": "private",
+            "type": "aws_route_table",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "public",
+            "type": "aws_route_table",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "private_assoc",
+            "type": "aws_route_table_association",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "private_assoc",
+            "type": "aws_route_table_association",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "public_assoc",
+            "type": "aws_route_table_association",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "public_assoc",
+            "type": "aws_route_table_association",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "private",
+            "type": "aws_subnet",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "private",
+            "type": "aws_subnet",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "public",
+            "type": "aws_subnet",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "public",
+            "type": "aws_subnet",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        },
+        {
+            "name": "main",
+            "type": "aws_vpc",
+            "estimated_cost": 0.0,
+            "actual_cost": 0.0,
+            "budget": 9999.0,
+            "status": "\u2705 Within budget"
+        }
+    ],
+    "total_estimated": 98.82,
+    "total_budget": 120
+}
