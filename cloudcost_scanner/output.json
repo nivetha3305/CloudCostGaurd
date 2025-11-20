@@ -58,14 +58,6 @@
         },
         {
             "name": "this",
-            "type": "aws_db_instance",
-            "estimated_cost": 12.24,
-            "actual_cost": 11.63,
-            "budget": 25,
-            "status": "\u2705 Within budget"
-        },
-        {
-            "name": "this",
             "type": "aws_db_subnet_group",
             "estimated_cost": 0.0,
             "actual_cost": 0.0,
@@ -241,6 +233,6 @@
             "status": "\u2705 Within budget"
         }
     ],
-    "total_estimated": 98.82,
+    "total_estimated": 86.57999999999998,
     "total_budget": 120
 }

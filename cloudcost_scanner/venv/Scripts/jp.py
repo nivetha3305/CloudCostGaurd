@@ -1,4 +1,4 @@
-#!F:\CloudCostGaurd\cloudcost_scanner\venv\Scripts\python.exe
+#!C:\Users\Sanjay kumar\OneDrive\Desktop\CloudCostGaurd\cloudcost_scanner\venv\Scripts\python.exe
 
 import sys
 import json
