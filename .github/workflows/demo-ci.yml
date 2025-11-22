@@ -34,7 +34,10 @@ jobs:
 
     - name: Terraform Plan
       working-directory: costgaurd-infra
-      run: terraform plan -out=tfplan.binary
+      env:
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      run: terraform plan -var="db_password=${DB_PASSWORD}" -out=tfplan.binary
+
 
     - name: Convert TF Plan to JSON
       working-directory: costgaurd-infra
