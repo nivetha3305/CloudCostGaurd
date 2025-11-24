@@ -39,6 +39,17 @@ jobs:
     - name: Terraform Init
       working-directory: costgaurd-infra
       run: terraform init -input=false
+    # create terraform.tfvars using repo secrets
+    
+    - name: Create terraform.tfvars from secrets
+      run: |
+      cat > costgaurd-infra/terraform.tfvars <<EOF
+      ec2_key_name   = "${{ secrets.EC2_KEY_NAME }}"
+      db_username    = "${{ secrets.DB_USERNAME }}"
+      db_password    = "${{ secrets.DB_PASSWORD }}"
+      s3_bucket_name = "${{ secrets.S3_BUCKET_NAME }}"
+      EOF
+
 
     - name: Terraform Plan
       working-directory: costgaurd-infra
