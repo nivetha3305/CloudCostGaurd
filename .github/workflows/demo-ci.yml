@@ -59,11 +59,16 @@ jobs:
 
       - name: Run Cost Scanner
         working-directory: cloudcost_scanner
-        id: scanner
         run: |
-          echo "Running cost scanner..."
-          python cost_scanner.py
-        continue-on-error: true
+          python cost_scanner.py --plan ../costgaurd-infra/plan.json --output output.json
+
+      - name: Upload cost report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cost-report
+          path: cloudcost_scanner/output.json
+
+
 
       - name: Check scanner result and decide
         if: ${{ steps.scanner.outcome == 'failure' }}
