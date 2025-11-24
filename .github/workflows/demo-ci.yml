@@ -55,7 +55,10 @@ jobs:
         run: terraform show -json tfplan.binary > plan.json
 
       - name: Move plan.json to scanner folder
-        run: mv costgaurd-infra/plan.json cloudcost_scanner/plan.json
+        run: mkdir -p cloudcost_scanner
+            cp costgaurd-infra/plan.json cloudcost_scanner/plan.json
+            echo "Plan copied to cloudcost_scanner/plan.json"
+         
 
       - name: Run Cost Scanner
         working-directory: cloudcost_scanner
