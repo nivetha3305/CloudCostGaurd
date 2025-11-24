@@ -1,10 +1,9 @@
 variable "aws_region" {
-  default = "ap-south-1"
+  type    = string
+  default = "us-east-1"
 }
 
-variable "aws_profile" {
-  default = "default"
-}
+
 variable "ec2_key_name" {
   type = string
 }

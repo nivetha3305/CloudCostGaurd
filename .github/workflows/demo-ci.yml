@@ -1,4 +1,4 @@
-name: CloudCostGuard - Demo CI
+name: Terraform Cost Guard (with AWS creds)
 
 on:
   push:
@@ -6,69 +6,80 @@ on:
   pull_request:
 
 jobs:
-  cost_scan:
+  terraform_cost_scan:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
+      - name: Configure AWS credentials (from Secrets)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Install Dependencies
-      run: |
-        pip install boto3 dash pandas numpy
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r cloudcost_scanner/requirements.txt || pip install boto3 dash pandas numpy
 
-    # --------------------------------------------
-    # CREATE terraform.tfvars FROM GITHUB SECRETS
-    # --------------------------------------------
-    - name: Create terraform.tfvars from secrets
-      run: |
-        cat > costgaurd-infra/terraform.tfvars <<EOF
-        ec2_key_name   = "${{ secrets.EC2_KEY_NAME }}"
-        db_username    = "${{ secrets.DB_USERNAME }}"
-        db_password    = "${{ secrets.DB_PASSWORD }}"
-        s3_bucket_name = "${{ secrets.S3_BUCKET_NAME }}"
-        EOF
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
 
-    - name: Terraform Init
-      working-directory: costgaurd-infra
-      run: terraform init -input=false
+      # Create terraform.tfvars from secrets so terraform plan is non-interactive
+      - name: Create terraform.tfvars from GitHub Secrets
+        run: |
+          mkdir -p costgaurd-infra
+          cat > costgaurd-infra/terraform.tfvars <<'TFVARS'
+          aws_region      = "${{ secrets.AWS_REGION }}"
+          ec2_key_name    = "${{ secrets.EC2_KEY_NAME }}"
+          db_username     = "${{ secrets.DB_USERNAME }}"
+          db_password     = "${{ secrets.DB_PASSWORD }}"
+          s3_bucket_name  = "${{ secrets.S3_BUCKET_NAME }}"
+          TFVARS
 
-    - name: Terraform Plan
-      working-directory: costgaurd-infra
-      run: terraform plan -out=tfplan.binary -input=false
+      - name: Terraform Init
+        working-directory: costgaurd-infra
+        run: terraform init -input=false
 
-    - name: Convert plan to JSON
-      working-directory: costgaurd-infra
-      run: terraform show -json tfplan.binary > plan.json
+      - name: Terraform Plan (non-interactive)
+        working-directory: costgaurd-infra
+        run: terraform plan -out=tfplan.binary -input=false
 
-    - name: Move plan.json to Scanner
-      run: mv costgaurd-infra/plan.json cloudcost_scanner/plan.json
+      - name: Convert TF plan to JSON
+        working-directory: costgaurd-infra
+        run: terraform show -json tfplan.binary > plan.json
 
-    - name: Run Cost Scanner
-      working-directory: cloudcost_scanner
-      id: scanner
-      run: |
-        python cost_scanner.py
-      continue-on-error: true
+      - name: Move plan.json to scanner folder
+        run: mv costgaurd-infra/plan.json cloudcost_scanner/plan.json
 
-    - name: Pipeline Decision
-      if: ${{ steps.scanner.outcome == 'failure' }}
-      run: |
-        echo "❌ Budget exceeded — Deployment halted."
-        exit 1
+      - name: Run Cost Scanner
+        working-directory: cloudcost_scanner
+        id: scanner
+        run: |
+          echo "Running cost scanner..."
+          python cost_scanner.py
+        continue-on-error: true
 
-    - name: Deployment Success
-      if: ${{ steps.scanner.outcome == 'success' }}
-      run: |
-        echo "✅ All resources within budget."
-        echo "🚀 Deployed to AWS (simulated)."
+      - name: Check scanner result and decide
+        if: ${{ steps.scanner.outcome == 'failure' }}
+        run: |
+          echo "❌ Cost scanner reported budget exceed — pipeline halted."
+          exit 1
+
+      - name: Simulated deployment success
+        if: ${{ steps.scanner.outcome == 'success' }}
+        run: |
+          echo "✅ All resources within budget."
+          echo "🚀 Deployed to AWS (simulated for demo)."
+
+      
