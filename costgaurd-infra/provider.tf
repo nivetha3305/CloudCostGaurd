@@ -1,4 +1,4 @@
-=terraform {
+terraform {
   required_version = ">= 1.5.0"
   required_providers {
     aws = {
@@ -9,10 +9,14 @@
 }
 
 provider "aws" {
-  region = var.aws_region
+  region                      = var.aws_region
 
-  # Fake static credentials so Terraform does NOT try
-  # to load local AWS profiles or AWS SSO
-  access_key = "FAKE_ACCESS_KEY"
-  secret_key = "FAKE_SECRET_KEY"
+  # Dummy values so Terraform never tries AWS authentication
+  access_key                  = "FAKE"
+  secret_key                  = "FAKE"
+
+  # Disable all validation so AWS is NOT contacted
+  skip_credentials_validation = true
+  skip_metadata_api_check     = true
+  skip_requesting_account_id  = true
 }
